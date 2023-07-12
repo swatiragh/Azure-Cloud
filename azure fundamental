@@ -1,0 +1,144 @@
+# [Azure Fundamentals part 1: Describe core Azure concepts](https://docs.microsoft.com/en-us/learn/paths/az-900-describe-cloud-concepts/)
+
+### [Introduction to Azure fundamentals](https://docs.microsoft.com/en-us/learn/modules/intro-to-azure-fundamentals/)
+- what does Azure offer?
+    - be ready for the future with Microsoft's constant innovation
+    - build on your terms, supports all languages and frameworks
+    - hybrid, on-premises and cloud
+    - trust your cloud, security that's trusted by all
+- what can I do with Azure?
+    - teams often start with Azure by running their existing apps on Azure's VMs
+    - create AI and machine learning solutions with speech, text, etc.
+    - dynamically grow to accommodate data
+- how does Azure work?
+    - it does virtualization by using something called a hypervisor
+        - the hypervisor runs multiple VMs on each server
+        - one server in each rack runs a "fabric controller"
+        - and each fabric controller is connected to the orchestrator
+            - the orchestrator manages everything to do with the servers, including responding to user requests
+            - requests are made through the Azure API, which can be accessed many ways, including through the Azure Portal
+            - when a fabric controller gets a request from the orchestrator, it creates the VM, does something on the VM, whatever the user requested
+- what is Azure Portal?
+    - Azure Portal is the GUI version of the Azure API
+    - you can build, manage and monitor your apps/deployments
+    - you can create custom dashboards
+- what is Azure Marketplace?
+    - on Azure Marketplace you can install services to run on Azure
+        - examples: all sorts of DBs, OS images, blockchain workbenches and dev kits
+- Azure services categories
+    - compute: VMs, deployed apps
+    - networking: VPN, load-balancing
+    - storage: disk, file, blob and archival storage types
+    - mobile: cross-platform/native devices, send notifications, etc.
+    - DBs: various DB services
+    - web: Azure Maps for geo services, publish APIs, etc.
+    - IoT: connect tons of different IoT devices, analyze sensor data
+    - big data: open source cluster services help do analysis
+    - AI: use your data to forecast
+    - devops: automating software delivery
+- subscription -> resource groups -> resource -> whatever that resource is (app, function, DB, etc.)
+
+### [Discuss Azure fundamental concepts](https://docs.microsoft.com/en-us/learn/modules/fundamental-azure-concepts/)
+- public, private and hybrid clouds
+    - public: services offered over the public internet
+    - private: these are the services that are only used by the owners of the resources
+    - hybrid: a cloud that has both private and public resources and allows data to be shared between them
+- model comparisons
+    - public:
+        - organizations pay only for what they use
+        - no capital expenditures to scale up (see capEx/opEx below)
+        - applications can be quickly provisioned and deprovisioned
+    - private:
+        - hardware must be purchased at startup and for maintenance
+        - organizations have complete control
+        - organizations are solely responsible for maintenance/security
+    - hybrid:
+        - most flexible of the models
+        - organizations decide where to run their applications
+        - organizations control security/compliance
+- cloud computing advantages
+    - no apparent downtime for the user (how do they do that?)
+    - easily scale vertically (increase processing power on individual machines) and horizontally (add capacity such as additional VMs)
+    - scale up or down as needed so you only pay for what you use
+    - deploy quickly as requirements change
+    - distribute deployments across the world to get the best performance everywhere
+    - backup services and data replication
+- capital expenses vs. operating expenses
+    - capEx: the up-front costs of physical infrastructure, these assets depreciate over time
+    - opEx: cost you pay as you use the services/products (consumption-based model), recurring payments
+    - cloud services are opEx, users only pay for the resources that they use
+    - opEx benefits:
+        - has no upfront costs
+        - no need to pay for maintenance or infrastructure that might go unused
+        - pay only for what you use
+        - stop paying for what you don't use
+- cloud service models
+    - SaaS services -> PaaS services -> IaaS services
+    - IaaS (infrastructure as a service): closest to managing physical servers, the cloud provider only keeps the hardware up to date, operating system and network configuration is up to the user
+    - PaaS (platform as a service): one step up from IaaS, the software as well as hardware requirements for running an app are taken care of by the provider, the user just has to upload code
+    - SaaS (software as a service): the software is provided on top of everything else, e.g. Office 365
+    - disadvantages
+        - Paas: the hardware might have limitations and the user can't customize
+        - SaaS: the hardware might not satisfy all the user's requirements, and the software itself might not either, no customization available
+    - ![cloud service comparisons](cloudservicemodels.png)
+- serverless computing
+    - the developers don't deal with the actual running of their app on a server, a provider runs the server for them
+
+### [Describe core Azure architectural components](https://docs.microsoft.com/en-us/learn/modules/azure-architecture-fundamentals/)
+- overview
+    - management groups
+        - manage access, policy, etc. for multiple subscriptions
+    - subscriptions
+        - groups user accounts
+    - resource groups
+        - resources grouped together, say by app
+    - resources
+        - VMs
+        - DBs
+        - etc.
+- Azure regions, availability zones, region pairs
+    - regions
+        - Azure balances workloads in each region so that each region can serve its users as quickly as possible
+        - each resource gets deployed to a specific region, and the VM where that resource lives will be within that region
+    - availability zones
+        - physically separate data centers in a region
+        - the idea is that at least one center in each zone will be running at any one time
+        - not all regions support availability zones
+        - you can replicate resources in multiple zones to provide redundency
+        - services that support zones
+            - zonal services (pin resource to a zone)
+                - VMs, IP addresses, managed disks
+            - zone-redundant services (replicates automatically across zones)
+                - storage, SQL DBs
+    - region pairs
+        - each region is paired with another region at least 300 miles away
+        - the resources in each region are replicated in the other in case something wipes out the other region
+        - some Azure services offer automatic geo-redundant storage with region pairs
+- resource groups
+    - usually a group holds resources that are of the same type, related to the same app or all in the same region
+    - a resource can only be a member of one group
+    - deleting a resource group deletes all the resources in it
+    - you can apply role-based access control (RBAC) to a resource group
+- resource manager
+    - ![Azure resource manager](azureresourcemanager.png)
+    - with resource manager you can deploy/redeploy resources with templates to ensure deployments are consistent
+    - you can define dependencies between resources
+    - you can apply tags to resources
+- subscriptions
+    - each user/account can have multiple subscriptions, each with different resource groups, permissions, etc.
+    - subscriptions can separate dev environments (testing, development, etc.)
+    - subscriptions can separate organizational structures, departments
+    - subscriptions can separate different billing groups so costs can be tracked by groups
+    - some resources are limited to a certain number per subscription, so you might make additional subscriptions in order to make more of that resource
+- billing
+    - subscriptions can be grouped together into invoice sections so you can see the cost of groups of subscriptions
+    - billing account -> billing profile -> invoice section -> subscription
+    - each billing profile has its own monthly invoice and payment method
+- management groups
+    - management groups are a level above subscriptions
+    - subscriptions automatically inherit the conditions/rules applied to the group
+    - e.g., you can make a rule for a management group that resources can only be made in specific regions
+    - a management group tree can be six levels deep, not including the root level or the subscription level
+- Azure Marketplace
+    - store for apps that are certified to run in Azure, made up of Azure resources
+    - you can buy and then deploy your own "copies" of those apps
